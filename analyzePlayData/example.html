@@ -173,7 +173,7 @@
             function openDevsTwitter(){
                 window.open('https://twitter.com/shimmand');
             }
-            
+
             // ブックマークレットをコピー()
             function copyBookmarklet() {
                 const copyTarget = document.getElementById("copyTarget");
@@ -198,7 +198,8 @@
                 const dataTableRow = document.querySelectorAll('tr[data-index]');
                 const headerTextJpn = '"種別","#","曲名","レベル","スコア","定数","倍数","現在","上限","950k","960k","970k","980k","990k"\n';
                 const headerTextEng = '"Type","#","Song","Level","Score","Const","Modifier","Now","Max","950k","960k","970k","980k","990k"\n';
-                let dataTableText = (document.querySelectorAll('.lang-jpn.d-none').length == 0) ? headerTextJpn : headerTextEng;
+                const headerTextKor = '"종류","#","곡명","레벨","점수","상수","배수","현재","상한","950k","960k","970k","980k","990k"\n';
+                let dataTableText = (document.querySelectorAll('.lang-jpn.d-none').length == 0) ? headerTextJpn : (document.querySelectorAll('.lang-eng.d-none').length == 0) ? headerTextEng : headerTextKor;
 
                 dataTableRow.forEach((tr, index) => {
                     if (index > 0) dataTableText += '\n';
@@ -213,7 +214,7 @@
                     return formattedDate;
                 }
 
-                if (window.navigator.msSaveBlob) { 
+                if (window.navigator.msSaveBlob) {
                     window.navigator.msSaveOrOpenBlob(blob, `playdata-${today}.csv`);
                 } else {
                     window.open(window.URL.createObjectURL(blob));
@@ -223,7 +224,7 @@
             // 特定の言語を表示()
             function showLangTextElement(selector) {
                 const langElms = document.querySelectorAll(selector);
-                
+
                 langElms.forEach(e => {
                     if (e.classList.contains('d-none')){
                         e.classList.remove('d-none');
@@ -234,7 +235,7 @@
             // 特定の言語を非表示()
             function hideLangTextElement(selector) {
                 const langElms = document.querySelectorAll(selector);
-                
+
                 langElms.forEach(e => {
                     if (!e.classList.contains('d-none')){
                         e.classList.add('d-none');
@@ -244,6 +245,7 @@
 
             // 日本語に変更()
             function switchToJapanese() {
+                hideLangTextElement('.lang-kor');
                 hideLangTextElement('.lang-eng');
                 showLangTextElement('.lang-jpn');
             }
@@ -251,7 +253,15 @@
             // 英語に変更()
             function switchToEnglish() {
                 hideLangTextElement('.lang-jpn');
+                hideLangTextElement('.lang-kor');
                 showLangTextElement('.lang-eng');
+            }
+
+            // change To Korean ()
+            function switchToKorean() {
+                hideLangTextElement('.lang-eng');
+                hideLangTextElement('.lang-jpn');
+                showLangTextElement('.lang-kor');
             }
 
             // マイページを開く()
@@ -287,6 +297,7 @@
                             <div class="fst-normal">
                                 <span class="lang-jpn">このページはツールの実行例です。一部の機能は制限されています。</span>
                                 <span class="lang-eng d-none">This page shows an example of the results of running the program. Some features are limited.</span>
+                                <span class="lang-kor d-none">이 페이지는 실행 프로그램 결과의 예시를 보여줍니다. 일부 기능은 제한되어 있습니다.</span>
                             </div>
                         </div>
                     </div>
@@ -298,6 +309,7 @@
                 <label for="playdata">
                     <span class="lang-jpn">プレイデータ</span>
                     <span class="lang-eng d-none">Play Data</span>
+                    <span class="lang-kor d-none">플레이 데이터</span>
                 </label>
                 <div class="position-absolute top-50 end-0 translate-middle-y">
                     <button type="button" class="btn btn-outline-danger shadow-sm" onclick="javascript:document.querySelectorAll('#playdata')[0].value = ''" disabled>
@@ -307,6 +319,7 @@
                         </svg>
                         <span class="lang-jpn">クリア</span>
                         <span class="lang-eng d-none">Clear</span>
+                        <span class="lang-kor d-none">삭제</span>
                     </button>
                 </div>
                 <div class="valid-feedback">
@@ -319,6 +332,9 @@
                     </span>
                     <span class="lang-eng d-none">
                         Analysis complete!
+                    </span>
+                    <span class="lang-kor d-none">
+                        분석 완료!
                     </span>
                 </div>
                 <div class="invalid-feedback error-feedback-1 d-none" id="warning-denied">
@@ -343,6 +359,15 @@
                         <span class="badge border border-danger text-danger align-bottom ms-1 me-1">Allow</span>
                         .
                     </span>
+                    <span class="lang-kor d-none">
+                        브라우저가 클립보드에 접근할 수 있도록 허용해주세요.
+                        <span class="badge border border-danger text-danger align-bottom ms-1 me-1">데이터 로드</span>
+                        를 누른 뒤,
+                        <span class="badge border border-danger text-danger align-bottom ms-1 me-1">붙여넣기</span>
+                        또는
+                        <span class="badge border border-danger text-danger align-bottom ms-1 me-1">허용</span>
+                        을 눌러주세요.
+                    </span>
                 </div>
                 <div class="invalid-feedback error-feedback-1 d-none" id="warning-empty">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
@@ -360,6 +385,12 @@
                         <span class="badge border border-danger text-danger align-bottom ms-1 me-1">Load Your Data</span>
                         yet, please do so first.
                     </span>
+                    <span class="lang-kor d-none">
+                        텍스트 필드(플레이 데이터)가 비었습니다.
+                        아직
+                        <span class="badge border border-danger text-danger align-bottom ms-1 me-1">데이터 로드</span>
+                        버튼을 누르지 않았다면, 먼저 눌러주세요.
+                    </span>
                 </div>
                 <div class="invalid-feedback error-feedback-1 d-none" id="warning-invalid">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
@@ -373,6 +404,10 @@
                     <span class="lang-eng d-none">
                         Your browser was not able to retrieve your play data correctly.
                         Please go back to "mypage" and run the bookmarklet again.
+                    </span>
+                    <span class="lang-kor d-none">
+                        브라우저가 플레이 데이터를 정상적으로 가져오지 못했습니다.
+                        "마이페이지"로 돌아가셔서 북마크릿을 다시 실행해주세요.
                     </span>
                 </div>
             </div>
@@ -388,6 +423,7 @@
                             <span class="position-absolute top-0 start-50 translate-middle badge rounded bg-primary">STEP 1</span>
                             <span class="lang-jpn">データを読込</span>
                             <span class="lang-eng d-none">Load Your Data</span>
+                            <span class="lang-kor d-none">데이터 로드</span>
                         </button>
                         <button type="button" class="btn btn-outline-primary" id="analyze" onclick="analyze()" disabled>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -396,6 +432,7 @@
                             <span class="position-absolute top-0 start-50 translate-middle badge rounded bg-primary">STEP 2</span>
                             <span class="lang-jpn">分析を実行</span>
                             <span class="lang-eng d-none">Start Analysis</span>
+                            <span class="lang-kor d-none">분석 시작</span>
                         </button>
                     </div>
                     <div class="btn-group me-2" role="group">
@@ -406,6 +443,7 @@
                             </svg>
                             <span class="lang-jpn">ヘルプ</span>
                             <span class="lang-eng d-none">Help</span>
+                            <span class="lang-kor d-none">도움말</span>
                         </button>
                         <button type="button" class="btn btn-outline-primary" id="save" onclick="saveAsCSV()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
@@ -413,6 +451,7 @@
                             </svg>
                             <span class="lang-jpn">CSVで保存</span>
                             <span class="lang-eng d-none">Save as CSV</span>
+                            <span class="lang-kor d-none">CSV로 저장</span>
                         </button>
                         <button type="button" class="btn btn-outline-primary" id="help" onclick="openChartsData()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
@@ -420,6 +459,7 @@
                             </svg>
                             <span class="lang-jpn">譜面データ</span>
                             <span class="lang-eng d-none">Charts Dataset</span>
+                            <span class="lang-kor d-none">차트 데이터</span>
                         </button>
                     </div>
                     <div class="btn-group me-2" role="group">
@@ -434,6 +474,12 @@
                                 <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"></path>
                             </svg>
                             English
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" id="btn-korean" onclick="switchToKorean()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
+                                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"></path>
+                            </svg>
+                            Korean
                         </button>
                     </div>
                 </div>
@@ -453,6 +499,9 @@
                                 <span class="lang-eng d-none">
                                     If <span class="badge border border-primary text-primary align-bottom">Load Your Data</span> does not work
                                 </span>
+                                <span class="lang-kor d-none">
+                                    <span class="badge border border-primary text-primary align-bottom">데이터 로드</span> 가 정상적으로 실행되지 않는 경우
+                                </span>
                             </button>
                         </div>
                         <div id="collapse-if-doesnt-work-1" class="accordion-collapse collapse" aria-labelledby="accordion-if-doesnt-work-1" data-bs-parent="#accordion-if-doesnt-work">
@@ -462,6 +511,9 @@
                                 </span>
                                 <span class="lang-eng d-none">
                                     If nothing happens when you press <span class="badge border border-secondary text-secondary align-bottom">Load Your Data</span>, paste the clipboard contents into the Play Data field instead, and then press <span class="badge border border-secondary text-secondary align-bottom">Start Analysis</span>.
+                                </span>
+                                <span class="lang-kor d-none">
+                                    <span class="badge border border-secondary text-secondary align-bottom">데이터 로드</span> 를 눌러도 아무 일도 일어나지 않는다면, 클립보드의 내용을 플레이 데이터에 붙여넣고 <span class="badge border border-secondary text-secondary align-bottom">분석 시작</span> 을 눌러주세요.
                                 </span>
                             </div>
                         </div>
@@ -474,6 +526,7 @@
                     <div class="h3 mb-0">
                         <span class="lang-jpn">設定</span>
                         <span class="lang-eng d-none">Settings</span>
+                        <span class="lang-kor d-none">설정</span>
                     </div>
                 </div>
                 <div class="row">
@@ -482,6 +535,7 @@
                             <div class="card-header">
                                 <span class="lang-jpn">表示する譜面</span>
                                 <span class="lang-eng d-none">Charts to Display</span>
+                                <span class="lang-kor d-none">차트에 보여질 내용</span>
                             </div>
                             <div class="card-body">
                                 <div class="btn-group" role="group">
@@ -494,6 +548,7 @@
                                         <span class="position-absolute top-0 start-50 translate-middle badge rounded bg-primary">DEFAULT</span>
                                         <span class="lang-jpn">すべて</span>
                                         <span class="lang-eng d-none">All</span>
+                                        <span class="lang-kor d-none">모든 곡</span>
                                     </label>
                                     <input type="radio" class="btn-check" name="radio1" id="radio1-2" autocomplete="off" onchange="changeDisplayState(1)">
                                     <label class="btn btn-outline-primary" for="radio1-2">
@@ -503,6 +558,7 @@
                                         </svg>
                                         <span class="lang-jpn">対象と候補</span>
                                         <span class="lang-eng d-none">Summarized</span>
+                                        <span class="lang-kor d-none">레이팅 곡</span>
                                     </label>
                                     <input type="radio" class="btn-check" name="radio1" id="radio1-3" autocomplete="off" onchange="changeDisplayState(2)">
                                     <label class="btn btn-outline-primary" for="radio1-3">
@@ -512,6 +568,7 @@
                                         </svg>
                                         <span class="lang-jpn">候補のみ</span>
                                         <span class="lang-eng d-none">Focused</span>
+                                        <span class="lang-kor d-none">이론치 미도달 레이팅 곡</span>
                                     </label>
                                 </div>
                                 <div class="accordion border border-primary rounded my-2" id="accordion-display-option">
@@ -526,6 +583,7 @@
                                                 </span>
                                                 <span class="lang-jpn">この設定について</span>
                                                 <span class="lang-eng d-none">About this section</span>
+                                                <span class="lang-kor d-none">설정 안내</span>
                                             </button>
                                         </div>
                                         <div id="collapse-display-option-1" class="accordion-collapse collapse" aria-labelledby="accordion-display-option-1" data-bs-parent="#accordion-display-option">
@@ -535,6 +593,9 @@
                                                 </span>
                                                 <span class="lang-eng d-none">
                                                     <span class="badge border border-secondary text-secondary align-bottom">Focused</span> will show only the Rating Candidates charts. Use this option if you do not want to show charts that do not affect the rating increase. <span class="badge border border-secondary text-secondary align-bottom">Summarized</span> will show the Rating Candidates charts and the Rating Target charts.
+                                                </span>
+                                                <span class="lang-kor d-none">
+                                                    <span class="badge border border-secondary text-secondary align-bottom">이론치 미도달 레이팅 곡</span> 은 레이팅을 올릴 수 있는 곡만 보여줍니다. 이미 이론치에 도달한 곡이나 레이팅 미 해당 곡은 보여주지 않습니다. <span class="badge border border-secondary text-secondary align-bottom">레이팅 곡</span> 은 레이팅에 해당하는 곡 전부 보여줍니다. 미 해당 곡은 보여주지 않습니다.
                                                 </span>
                                             </div>
                                         </div>
@@ -551,17 +612,20 @@
                     <div class="h3 mb-0">
                         <span class="lang-jpn">概要</span>
                         <span class="lang-eng d-none">Summary</span>
+                        <span class="lang-kor d-none">요약</span>
                     </div>
                     <div class="h6 mb-0 text-end">
                         <div class="pb-1">
                             <span class="badge border border-secondary text-dark align-middle me-1">
                                 <span class="lang-jpn">合計</span>
                                 <span class="lang-eng d-none">Total</span>
+                                <span class="lang-kor d-none">합계</span>
                             </span>
                             <span class="total-rate-current me-1 align-middle">2707.63</span>
                             <span class="badge border border-secondary text-dark align-middle me-1">
                                 <span class="lang-jpn">理論値</span>
                                 <span class="lang-eng d-none">Max</span>
+                                <span class="lang-kor d-none">이론치</span>
                             </span>
                             <span class="total-rate-upper align-middle">2760.80</span>
                         </div>
@@ -707,17 +771,20 @@
                     <div class="h3 mb-0">
                         <span class="lang-jpn">新曲枠</span>
                         <span class="lang-eng d-none">Newer Charts</span>
+                        <span class="lang-kor d-none">신곡</span>
                     </div>
                     <div class="h6 mb-0 text-end">
                         <div class="pb-1">
                             <span class="badge border border-secondary text-dark align-middle me-1">
                                 <span class="lang-jpn">小計</span>
                                 <span class="lang-eng d-none">Subtotal</span>
+                                <span class="lang-kor d-none">신곡 합계</span>
                             </span>
                             <span class="summedRateCurrent me-1 align-middle">799.23</span>
                             <span class="badge border border-secondary text-dark align-middle me-1">
                                 <span class="lang-jpn">理論値</span>
                                 <span class="lang-eng d-none">Max</span>
+                                <span class="lang-kor d-none">신곡 이론치</span>
                             </span>
                             <span class="summedRateUpper align-middle">821.60</span>
                         </div>
@@ -725,19 +792,21 @@
                             <span class="badge border border-secondary text-dark align-middle me-1" style="background-color: #cfe2ff;">
                                 <span class="lang-jpn">レーティング対象</span>
                                 <span class="lang-eng d-none">Rate Baseline</span>
+                                <span class="lang-kor d-none">레이팅 대상</span>
                             </span>
                             <span class="singleRateLower align-middle">51.20</span>
                             <span class="align-middle">
                                 <small>
                                     <span class="lang-jpn">以上</span>
                                     <span class="lang-eng d-none"></span>
+                                    <span class="lang-kor d-none">이상</span>
                                 </small>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="stats-graph">
-                    <div class="progress shadow-sm mx-4">    
+                    <div class="progress shadow-sm mx-4">
                         <div class="progress-bar graph-bar-stats bg-lt-950" role="progressbar" style="width: 2.564102564102564%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="39"></div>
                         <div class="progress-bar graph-bar-stats bg-is-950" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="39"></div>
                         <div class="progress-bar graph-bar-stats bg-is-960" role="progressbar" style="width: 2.564102564102564%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="39"></div>
@@ -794,6 +863,7 @@
                             </svg>
                             <span class="lang-jpn">この表は左右にスクロールできます</span>
                             <span class="lang-eng d-none">This table is scrollable horizontally.</span>
+                            <span class="lang-kor d-none">이 표는 가로 방향으로 스크롤 할 수 있습니다.</span>
                         </caption>
                         <thead>
                             <tr>
@@ -801,18 +871,21 @@
                                     <small>
                                         <span class="lang-jpn">基本情報</span>
                                         <span class="lang-eng d-none">Play Results</span>
+                                        <span class="lang-kor d-none">플레이 결과</span>
                                     </small>
                                 </th>
                                 <th scope="col" colspan="4">
                                     <small>
                                         <span class="lang-jpn">譜面別Rate</span>
                                         <span class="lang-eng d-none">Single Rate</span>
+                                        <span class="lang-kor d-none">곡별 레이팅</span>
                                     </small>
                                 </th>
                                 <th scope="col" colspan="5">
                                     <small>
                                         <span class="lang-jpn">スコア別上昇値</span>
                                         <span class="lang-eng d-none">Rate Increases</span>
+                                        <span class="lang-kor d-none">점수별 상승치</span>
                                     </small>
                                 </th>
                             </tr>
@@ -821,30 +894,37 @@
                                 <th scope="col">
                                     <span class="lang-jpn">曲名</span>
                                     <span class="lang-eng d-none">Song</span>
+                                    <span class="lang-kor d-none">곡명</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">レベル</span>
                                     <span class="lang-eng d-none">Level</span>
+                                    <span class="lang-kor d-none">레벨</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">スコア</span>
                                     <span class="lang-eng d-none">Score</span>
+                                    <span class="lang-kor d-none">점수</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">定数</span>
                                     <span class="lang-eng d-none">Const</span>
+                                    <span class="lang-kor d-none">상수</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">倍数</span>
                                     <span class="lang-eng d-none">Modifier</span>
+                                    <span class="lang-kor d-none">배수</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">現在</span>
                                     <span class="lang-eng d-none">Now</span>
+                                    <span class="lang-kor d-none">현재</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">上限</span>
                                     <span class="lang-eng d-none">Max</span>
+                                    <span class="lang-kor d-none">상한</span>
                                 </th>
                                 <th scope="col">950k</th>
                                 <th scope="col">960k</th>
@@ -1332,17 +1412,20 @@
                     <div class="h3 mb-0">
                         <span class="lang-jpn">旧曲枠</span>
                         <span class="lang-eng d-none">Older Charts</span>
+                        <span class="lang-kor d-none">구곡</span>
                     </div>
                     <div class="h6 mb-0 text-end">
                         <div class="pb-1">
                             <span class="badge border border-secondary text-dark align-middle me-1">
                                 <span class="lang-jpn">小計</span>
                                 <span class="lang-eng d-none">Subtotal</span>
+                                <span class="lang-kor d-none">구곡 합계</span>
                             </span>
                             <span class="summedRateCurrent me-1 align-middle">1908.40</span>
                             <span class="badge border border-secondary text-dark align-middle me-1">
                                 <span class="lang-jpn">理論値</span>
                                 <span class="lang-eng d-none">Max</span>
+                                <span class="lang-kor d-none">구곡 이론치</span>
                             </span>
                             <span class="summedRateUpper align-middle">1939.20</span>
                         </div>
@@ -1350,12 +1433,14 @@
                             <span class="badge border border-secondary text-dark align-middle me-1" style="background-color: #cfe2ff;">
                                 <span class="lang-jpn">レーティング対象</span>
                                 <span class="lang-eng d-none">Rate Baseline</span>
+                                <span class="lang-kor d-none">레이팅 대상</span>
                             </span>
                             <span class="singleRateLower align-middle">53.20</span>
                             <span class="align-middle">
                                 <small>
                                     <span class="lang-jpn">以上</span>
                                     <span class="lang-eng d-none"></span>
+                                    <span class="lang-kor d-none">이상</span>
                                 </small>
                             </span>
                         </div>
@@ -1419,6 +1504,7 @@
                             </svg>
                             <span class="lang-jpn">この表は左右にスクロールできます</span>
                             <span class="lang-eng d-none">This table is scrollable horizontally.</span>
+                            <span class="lang-kor d-none">이 표는 가로 방향으로 스크롤 할 수 있습니다.</span>
                         </caption>
                         <thead>
                             <tr>
@@ -1426,18 +1512,21 @@
                                     <small>
                                         <span class="lang-jpn">基本情報</span>
                                         <span class="lang-eng d-none">Play Results</span>
+                                        <span class="lang-kor d-none">플레이 결과</span>
                                     </small>
                                 </th>
                                 <th scope="col" colspan="4">
                                     <small>
                                         <span class="lang-jpn">譜面別Rate</span>
                                         <span class="lang-eng d-none">Single Rate</span>
+                                        <span class="lang-kor d-none">곡별 레이팅</span>
                                     </small>
                                 </th>
                                 <th scope="col" colspan="5">
                                     <small>
                                         <span class="lang-jpn">スコア別上昇値</span>
                                         <span class="lang-eng d-none">Rate Increases</span>
+                                        <span class="lang-kor d-none">점수별 상승치</span>
                                     </small>
                                 </th>
                             </tr>
@@ -1446,30 +1535,37 @@
                                 <th scope="col">
                                     <span class="lang-jpn">曲名</span>
                                     <span class="lang-eng d-none">Song</span>
+                                    <span class="lang-kor d-none">곡명</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">レベル</span>
                                     <span class="lang-eng d-none">Level</span>
+                                    <span class="lang-kor d-none">레벨</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">スコア</span>
                                     <span class="lang-eng d-none">Score</span>
+                                    <span class="lang-kor d-none">점수</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">定数</span>
                                     <span class="lang-eng d-none">Const</span>
+                                    <span class="lang-kor d-none">상수</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">倍数</span>
                                     <span class="lang-eng d-none">Modifier</span>
+                                    <span class="lang-kor d-none">배수</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">現在</span>
                                     <span class="lang-eng d-none">Now</span>
+                                    <span class="lang-kor d-none">현재</span>
                                 </th>
                                 <th scope="col">
                                     <span class="lang-jpn">上限</span>
                                     <span class="lang-eng d-none">Max</span>
+                                    <span class="lang-kor d-none">상한</span>
                                 </th>
                                 <th scope="col">950k</th>
                                 <th scope="col">960k</th>
@@ -5227,6 +5323,12 @@
                                     </svg>
                                     English
                                 </button>
+                                <button type="button" class="btn btn-outline-primary" id="btn-korean" onclick="switchToKorean()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
+                                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"></path>
+                                    </svg>
+                                    Korean
+                                </button>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -5238,10 +5340,12 @@
                                 </svg>
                                 <span class="lang-jpn">ようこそ</span>
                                 <span class="lang-eng d-none">Welcome</span>
+                                <span class="lang-kor d-none">어서오세요!</span>
                             </div>
                             <div>
                                 <span class="lang-jpn"><strong>WACCA RATING ANALYZER</strong> は、WACCAのマイページで確認できる情報を元に、レーティングを上昇させる上で便利なデータを確認できるツールです。</span>
                                 <span class="lang-eng d-none">The <strong>WACCA RATING ANALYZER</strong> provides you useful data for increasing your rating based on the data available on your WACCA My Page.</span>
+                                <span class="lang-kor d-none">The <strong>WACCA RATING ANALYZER</strong> 는 WACCA 마이 페이지에 있는 여러 분의 플레이 데이터를 바탕으로 레이팅 분석을 도와주는 툴입니다.</span>
                             </div>
                             <hr>
                             <div class="h5">
@@ -5250,6 +5354,7 @@
                                 </svg>
                                 <span class="lang-jpn">特徴</span>
                                 <span class="lang-eng d-none">Features</span>
+                                <span class="lang-kor d-none">구성</span>
                             </div>
                             <div>
                                 <ul class="list-group">
@@ -5257,30 +5362,36 @@
                                         <div class="fw-bold">
                                             <span class="lang-jpn">データ収集なし</span>
                                             <span class="lang-eng d-none">No data collection</span>
+                                            <span class="lang-kor d-none">데이터가 수집되지 않았습니다.</span>
                                         </div>
                                         <div>
                                             <span class="lang-jpn">このツールはブラウザー上で動作し、あなたのプレイ成績がサーバーへ送信されることはありません。</span>
                                             <span class="lang-eng d-none">This program runs in your browser and does not send your play results to the server.</span>
+                                            <span class="lang-kor d-none">이 프로그램은 브라우저에서 실행되며, 서버로 정보가 전송되지 않습니다.</span>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
                                         <div class="fw-bold">
                                             <span class="lang-jpn">レーティング候補譜面の上限数なし</span>
                                             <span class="lang-eng d-none">Show more 'Rating Candidate Charts'</span>
+                                            <span class="lang-kor d-none">레이팅 대상 곡 확인</span>
                                         </div>
                                         <div>
                                             <span class="lang-jpn">レーティング候補譜面をはじめ、レーティングを上げるために便利なデータを難易度EXPERT以上のすべての譜面で見ることができます。</span>
                                             <span class="lang-eng d-none">You can see 'Rating Candidate Charts' and other useful data for increasing your rating on all charts of difficulty EXPERT and higher.</span>
+                                            <span class="lang-kor d-none">레이팅 대상 곡을 확인할 수 있으며, EXPERT 이상 난이도 곡에 대하여 레이팅을 올리는데 필요한 유용한 데이터를 확인할 수 있습니다.</span>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
                                         <div class="fw-bold">
                                             <span class="lang-jpn">レーティング上昇量が詳細に分かる</span>
                                             <span class="lang-eng d-none">Detailed rating increase</span>
+                                            <span class="lang-kor d-none">레이팅 상승률 확인</span>
                                         </div>
                                         <div>
                                             <span class="lang-jpn">所定のスコアへ到達した際のレーティングの上昇量が、譜面ごとに分かります。</span>
                                             <span class="lang-eng d-none">You can see the amount of increase in your rating when you reach a certain score for each chart.</span>
+                                            <span class="lang-kor d-none">각 곡의 특정 점수에 도달하면 어느 정도 양의 레이팅을 획득할 수 있는지 확인할 수 있습니다.</span>
                                         </div>
                                     </li>
                                 </ul>
@@ -5293,6 +5404,7 @@
                                 </svg>
                                 <span class="lang-jpn">注意</span>
                                 <span class="lang-eng d-none">Caution</span>
+                                <span class="lang-kor d-none">주의</span>
                             </div>
                             <div>
                                 <ul class="list-group">
@@ -5300,18 +5412,21 @@
                                         <div>
                                             <span class="lang-jpn">ブラウザーのタブを閉じると、<strong>分析されたデータは失われます</strong>。なお再度ツールを実行することで、同じ結果を得られます。</span>
                                             <span class="lang-eng d-none">When you close the tab in your browser, <strong>the analyzed data will be lost</strong>. But don't worry. Just run the program again and you will get the same result.</span>
+                                            <span class="lang-kor d-none">브라우저를 닫는 경우, <strong>분석된 데이터가 사라집니다</strong>. 그러나 다시 프로그램을 실행할 경우 동일한 결과를 얻을 수 있습니다.</span>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
                                         <div>
                                             <span class="lang-jpn">譜面定数はあくまで推測された値であるため、<strong>公式の値とは異なる可能性</strong>があります。</span>
                                             <span class="lang-eng d-none">The chart constants are only guessed values and <strong>may be different from the official values</strong>.</span>
+                                            <span class="lang-kor d-none">차트의 상수들은 예상되는 값들이며, <strong>공식 값과는 다를 수 있습니다</strong>.</span>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
                                         <div>
                                             <span class="lang-jpn">このプログラムは暇つぶしを目的に作成されているため、<strong>品質は保証されておりません</strong>。<span class="text-muted">役に立たなかったらごめんなさい。</span></span>
                                             <span class="lang-eng d-none">The quality of this program is <strong>not guaranteed</strong>, as it was created as a way to pass the time. <span class="text-muted">I'm sorry if this program did not help you...</span></span>
+                                            <span class="lang-kor d-none">이 프로그램의 <strong>품질에 대해서는 보장되지 않습니다</strong>. <span class="text-muted">도움이 되었으면 좋겠네요...</span></span>
                                         </div>
                                     </li>
                                 </ul>
@@ -5324,15 +5439,18 @@
                                 </svg>
                                 <span class="lang-jpn">準備</span>
                                 <span class="lang-eng d-none">Getting Started</span>
+                                <span class="lang-kor d-none">시작하기</span>
                             </div>
                             <div>
                                 <ol class="list-group list-group-numbered">
                                     <li class="list-group-item">
                                         <span class="lang-jpn">このページをブックマークする</span>
                                         <span class="lang-eng d-none">Bookmark this page.</span>
+                                        <span class="lang-kor d-none">이 페이지를 북마크에 등록하세요.</span>
                                         <div class="text-muted">
                                             <span class="lang-jpn">ブックマークの名前の変更は任意です。</span>
                                             <span class="lang-eng d-none">*Renaming your bookmarks is optional.</span>
+                                            <span class="lang-kor d-none">북마크의 이름은 바꾸셔도 상관없습니다.</span>
                                         </div>
                                         <div class="accordion border border-danger rounded m-2" id="accordion-android-user">
                                             <div class="accordion-item">
@@ -5346,6 +5464,7 @@
                                                         </span>
                                                         <span class="lang-jpn">Android端末をご利用の方へ</span>
                                                         <span class="lang-eng d-none">For Android device users</span>
+                                                        <span class="lang-kor d-none">안드로이드 이용자</span>
                                                     </button>
                                                 </div>
                                                 <div id="collapse-android-user-1" class="accordion-collapse collapse" aria-labelledby="accordion-android-user-1" data-bs-parent="#accordion-android-user">
