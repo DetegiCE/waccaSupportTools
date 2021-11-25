@@ -5309,6 +5309,7 @@
                             <div class="modal-title h5" id="helpModalLabel">
                                 <span class="lang-jpn">ヘルプ</span>
                                 <span class="lang-eng d-none">Help</span>
+                                <span class="lang-kor d-none">도움말</span>
                             </div>
                             <div class="btn-group ms-2" role="group">
                                 <button type="button" class="btn btn-outline-primary" id="btn-japanese" onclick="switchToJapanese()">
@@ -5471,11 +5472,13 @@
                                                     <div class="accordion-body p-2">
                                                         <span class="lang-jpn">環境によっては、当ツールは動作しない場合があります。まずお使いのブラウザーで動作確認を行い、動作しない場合は<strong>Firefox</strong>に切り替えてみてください。Chromeでは動作しなかったという報告があります。</span>
                                                         <span class="lang-eng d-none">This program may not work on some devices. So please try to see if this program works in your current browser, and if not, switch to <strong>Firefox</strong>. We have received reports that this program did not work on Chrome.</span>
+                                                        <span class="lang-kor d-none">이 프로그램은 몇몇 기기에서 작동하지 않을 수 있습니다. 따라서 현재 브라우저에서 잘 작동하는지 시도해보고 안된다면 <strong>파이어폭스</strong> 브라우저를 이용해주세요. 크롬 브라우저에서 일부 작동하지 않는다는 제보를 받았습니다.</span>
                                                     </div>
                                                     <hr class="m-0">
                                                     <div class="accordion-body p-2">
                                                         <span class="lang-jpn">ブックマークの名前の変更は任意ですが、Android端末をご利用の場合は、当プログラムを実行する際にブックマークの名前を入力する必要がありますので、<strong>入力が容易な名前に変更</strong>してください。</span>
                                                         <span class="lang-eng d-none">Renaming your bookmarks is optional, but if your device is an Android device, you will need to enter the name of the bookmark when you run this program, we recommends that you <strong>change the name to one that is easy to enter</strong>.</span>
+                                                        <span class="lang-kor d-none">북마크의 이름을 변경하는 것은 선택이지만, 안드로이드 이용자의 경우 북마크의 이름을 반드시 입력해야 합니다. <strong>입력하기 쉬운 이름으로 작성하시기 바랍니다</strong>.</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -5484,6 +5487,7 @@
                                     <li class="list-group-item">
                                         <span class="lang-jpn">ブックマークレットをコピーする</span>
                                         <span class="lang-eng d-none">Copy the bookmarklet.</span>
+                                        <span class="lang-kor d-none">북마크릿을 복사하세요.</span>
                                         <div class="input-group m-2">
                                             <input type="text" class="form-control" id="copyTarget" placeholder="code" aria-label="code" aria-describedby="button-addon" value="javascript:(function(){let%20path='https://shimmand.github.io/waccaSupportTools/analyzePlayData/main.js';import(path).then((obj)=>obj.main())})();" readonly="">
                                             <button class="btn btn-outline-primary" onclick="copyBookmarklet()" type="button" id="button-addon">
@@ -5493,6 +5497,7 @@
                                                 </svg>
                                                 <span class="lang-jpn">コピー</span>
                                                 <span class="lang-eng d-none">Copy</span>
+                                                <span class="lang-kor d-none">복사</span>
                                             </button>
                                         </div>
                                         <div class="accordion border border-primary rounded m-2" id="accordion-what-is-bookmarklet">
@@ -5507,12 +5512,14 @@
                                                         </span>
                                                         <span class="lang-jpn">ブックマークレットとは？</span>
                                                         <span class="lang-eng d-none">What is bookmarklet?</span>
+                                                        <span class="lang-kor d-none">북마크릿이란?</span>
                                                     </button>
                                                 </div>
                                                 <div id="collapse-what-is-bookmarklet-1" class="accordion-collapse collapse" aria-labelledby="accordion-what-is-bookmarklet-1" data-bs-parent="#accordion-what-is-bookmarklet">
                                                     <div class="accordion-body p-2">
                                                         <span class="lang-jpn">ブックマークレットとは、任意のタイミングでブックマークを開くことで実行できるJavaScriptで書かれたスクリプトのことです。ここで保存したブックマークレットをマイページで実行すると、ブラウザーがあなたのプレイ成績を収集します。</span>
                                                         <span class="lang-eng d-none">A bookmarklet is a JavaScript script that you can run by opening your bookmarks. If you run the bookmarklet you saved here on My Page, the browser will collect your play scores.</span>
+                                                        <span class="lang-kor d-none">북마크릿은 자바스크립트 언어로 된 스크립트로 북마크에서 바로 실행시킬 수 있습니다. WACCA 마이페이지에서 북마크릿을 실행시키면 브라우저가 여러분의 점수를 수집합니다.</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -5521,6 +5528,7 @@
                                     <li class="list-group-item">
                                         <span class="lang-jpn">ステップ1で作成したブックマークのアドレスを、ステップ2でコピーした文字列に書き換えて保存する</span>
                                         <span class="lang-eng d-none">Rewrite the address of the bookmark created in step 1 to the string copied in step 2 and save it.</span>
+                                        <span class="lang-kor d-none">1단계에서 만든 북마크의 주소를 2단계에서 복사한 문자열로 바꾸고 저장하세요.</span>
                                     </li>
                                 </ol>
                             </div>
@@ -5532,12 +5540,14 @@
                                 </svg>
                                 <span class="lang-jpn">使い方</span>
                                 <span class="lang-eng d-none">How to Use</span>
+                                <span class="lang-kor d-none">사용 방법</span>
                             </div>
                             <div>
                                 <ol class="list-group list-group-numbered">
                                     <li class="list-group-item">
                                         <span class="lang-jpn">WACCAのマイページへログインする</span>
                                         <span class="lang-eng d-none">Login to WACCA My Page.</span>
+                                        <span class="lang-kor d-none">WACCA 마이 페이지에 로그인하세요.</span>
                                         <div class="m-2">
                                             <button type="button" class="btn btn-outline-primary" id="help" onclick="openMyPage()">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square" viewBox="0 0 16 16">
@@ -5545,6 +5555,7 @@
                                                 </svg>
                                                 <span class="lang-jpn">マイページを開く</span>
                                                 <span class="lang-eng d-none">Open My Page</span>
+                                                <span class="lang-kor d-none">마이 페이지 바로가기</span>
                                             </button>
                                         </div>
                                     </li>
@@ -5555,14 +5566,19 @@
                                         <span class="lang-eng d-none">
                                             Press <span class="badge border border-secondary text-secondary align-bottom">プレイデータ (Play Data)</span>
                                         </span>
+                                        <span class="lang-kor d-none">
+                                            <span class="badge border border-secondary text-secondary align-bottom">プレイデータ (Play Data)</span> 를 누르세요
+                                        </span>
                                         <div class="text-muted">
                                             <span class="lang-jpn"></span>
                                             <span class="lang-eng d-none">*Of the six buttons at the top, press the top left button.</span>
+                                            <span class="lang-kor d-none">*상단의 6개 버튼 중 가장 왼쪽 위 버튼입니다.</span>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
                                         <span class="lang-jpn">ブックマークレットを実行する</span>
                                         <span class="lang-eng d-none">Run the bookmarklet.</span>
+                                        <span class="lang-kor d-none">북마크릿을 실행하세요.</span>
                                         <div class="accordion border border-primary rounded m-2" id="accordion-how-to-run">
                                             <div class="accordion-item">
                                                 <div class="h2 accordion-header" id="accordion-how-to-run-1">
@@ -5575,12 +5591,14 @@
                                                         </span>
                                                         <span class="lang-jpn">iPhoneやiPad、標準的なパソコンをご利用の方へ</span>
                                                         <span class="lang-eng d-none">For iPhone, iPad, and most PCs users</span>
+                                                        <span class="lang-kor d-none">iPhone, iPad, 그리고 대부분의 PC 이용자</span>
                                                     </button>
                                                 </div>
                                                 <div id="collapse-how-to-run-1" class="accordion-collapse collapse" aria-labelledby="accordion-how-to-run-1" data-bs-parent="#accordion-how-to-run">
                                                     <div class="accordion-body p-2">
                                                         <span class="lang-jpn">ブックマークの一覧からブックマークレットを押してください。</span>
                                                         <span class="lang-eng d-none">Open the list of bookmarks and press the bookmarklet.</span>
+                                                        <span class="lang-kor d-none">북마크 리스트를 열고 북마크릿을 누르세요.</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -5595,12 +5613,14 @@
                                                         </span>
                                                         <span class="lang-jpn">Android端末およびモバイルOSを搭載した一部のパソコンをご利用の方へ</span>
                                                         <span class="lang-eng d-none">For Android device (and PCs with mobile OS) users</span>
+                                                        <span class="lang-kor d-none">안드로이드와 모바일 OS PC 이용자</span>
                                                     </button>
                                                 </div>
                                                 <div id="collapse-how-to-run-2" class="accordion-collapse collapse" aria-labelledby="accordion-how-to-run-2" data-bs-parent="#accordion-how-to-run">
                                                     <div class="accordion-body p-2">
                                                         <span class="lang-jpn">アドレスバーにブックマークレットの名前を入力し、表示された候補の中からブックマークレットを押してください。</span>
                                                         <span class="lang-eng d-none">Type the name of the bookmarklet in the address bar and press the bookmarklet from the list of suggestions.</span>
+                                                        <span class="lang-kor d-none">주소창에서 북마크릿의 이름을 입력하고 추천목록에서 북마크릿을 선택하세요.</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -5608,6 +5628,7 @@
                                         <div class="text-muted">
                                             <span class="lang-jpn">ブックマークレットを実行する手順は、端末の環境により異なる場合があります。</span>
                                             <span class="lang-eng d-none">*The steps for executing the bookmarklet may vary depending on the device environment.</span>
+                                            <span class="lang-kor d-none">*기기 환경에 따라 북마크릿의 실행 단계가 달라질 수 있습니다.</span>
                                         </div>
                                     </li>
                                     <li class="list-group-item">
@@ -5617,6 +5638,9 @@
                                         <span class="lang-eng d-none">
                                             When you see the message on the page that the bookmarklet has been processed, press <span class="badge border border-secondary text-secondary align-bottom">Open the Web Program</span>.
                                         </span>
+                                        <span class="lang-kor d-none">
+                                            북마크릿의 실행이 완료되었다는 메시지가 페이지에 보이면, <span class="badge border border-secondary text-secondary align-bottom">웹 프로그램 열기</span> 를 누르세요.
+                                        </span>
                                     </li>
                                     <li class="list-group-item">
                                         <span class="lang-jpn">
@@ -5624,6 +5648,9 @@
                                         </span>
                                         <span class="lang-eng d-none">
                                             Press <span class="badge border border-secondary text-secondary align-bottom">Load Your Data</span>.
+                                        </span>
+                                        <span class="lang-kor d-none">
+                                            <span class="badge border border-secondary text-secondary align-bottom">데이터 로드</span> 를 누르세요.
                                         </span>
                                     </li>
                                     <li class="list-group-item">
@@ -5633,10 +5660,14 @@
                                         <span class="lang-eng d-none">
                                             Press <span class="badge border border-secondary text-secondary align-bottom">Start Analysis</span> .
                                         </span>
+                                        <span class="lang-kor d-none">
+                                            <span class="badge border border-secondary text-secondary align-bottom">분석 시작</span> 을 누르세요.
+                                        </span>
                                     </li>
                                     <li class="list-group-item text-custom-primary-dark bg-primary bg-opacity-25">
                                         <span class="lang-jpn">完了！</span>
                                         <span class="lang-eng d-none">Complete!</span>
+                                        <span class="lang-kor d-none">완료!</span>
                                     </li>
                                 </ol>
                             </div>
